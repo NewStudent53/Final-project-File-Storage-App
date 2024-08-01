@@ -1,8 +1,17 @@
-import React from 'react'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './App.css';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 
 function Home() {
-    return (
-        <div>Home</div>
+    return(
+        <>
+            <Header/>
+            <div className='App'>
+                <Sidebar/>
+            </div>
+        </>
     )
 }
 
