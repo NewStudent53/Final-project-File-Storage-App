@@ -53,32 +53,7 @@
           <p id="errorMessage1" class="error-message" style="display: none;">Email is needed</p>
           <p id="errorMessage2" class="error-message" style="display: none;">Password is needed</p>
           <p id="errorMessage3" class="error-message" style="display: none;">Password should match</p>
-          <!--<script>
-            function login() {
-              var email = document.getElementById("loginEmail").value;
-              var password = document.getElementById("loginPassword").value;
-              var valid = true;
-          
-              if (email === "") {
-                document.getElementById("errorMessage1").style.display = "block";
-                valid = false;
-              } else {
-                document.getElementById("errorMessage1").style.display = "none";
-              }
-          
-              if (password === "") {
-                document.getElementById("errorMessage2").style.display = "block";
-                valid = false;
-              } else {
-                document.getElementById("errorMessage2").style.display = "none";
-              }
-          
-              if (valid) {
-                alert('Welcome back to File Manager! Redirecting to your file dashboard...');
-                window.location.href = 'https://filemanager.eco/dashboard';
-              }
-            }
-          </script>-->
+
           <p class="switch-form" onclick="switchForm('register')">New user? Create an account!</p>
         </div>
         <div class="form-container" id="registerForm" style="display: none;">
@@ -93,43 +68,7 @@
           <p id="errorMessage5" class="error-message" style="display: none;">Email is needed</p>
           <p id="errorMessage6" class="error-message" style="display: none;">Password is needed</p>
           <p id="errorMessage7" class="error-message" style="display: none;">Password should match</p>
-          <!--<script>
-            function register() {
-            var name = document.getElementById("registerName").value;
-            var email = document.getElementById("registerEmail").value;
-            var password = document.getElementById("registerPassword").value;
-            var confirmpass = document.getElementById("confirmPassword").value;
-            var valid = true;
 
-            if (name === "") {
-              document.getElementById("errorMessage4").style.display = "block";
-              valid = false;
-            } else {
-              document.getElementById("errorMessage4").style.display = "none";
-            }         
-
-            if (email === "") {
-              document.getElementById("errorMessage5").style.display = "block";
-              valid = false;
-            } else {
-              document.getElementById("errorMessage5").style.display = "none";
-            }         
-
-            if (password === "") {
-              document.getElementById("errorMessage6").style.display = "block";
-              valid = false;
-            } else {
-              document.getElementById("errorMessage6").style.display = "none";
-            }        
-            
-            if (valid && confirmpass !== password) {
-              document.getElementById("errorMessage7").style.display = "block";
-            } else if(valid && confirmpass == password) {
-              alert('Welcome to File Manager! Your account is being set up...');
-              switchForm('login');
-            }
-            }                        
-          </script>-->
         </div>
       </div>
 
