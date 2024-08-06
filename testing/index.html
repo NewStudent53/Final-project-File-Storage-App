@@ -1,4 +1,4 @@
-<!-- index.html-->
+<!-- index.html cant erase it contains login and logout functions--> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,6 @@
     <!--Logi/Register test-->
 </head>
 <body>
-  <script src="index.js"></script>
     <div class="container">
         <div class="logo-container">
           <svg class="logo" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
@@ -46,9 +45,40 @@
         <h1>File Manager</h1>
         <div class="form-container" id="loginForm">
           <h2>Welcome Back</h2>
+          <script src="index.js"></script>
           <input type="email" id="loginEmail" placeholder="Email" required>
           <input type="password" id="loginPassword" placeholder="Password" required>
           <button onclick="login()">Access My Files</button>
+          <p id="errorMessage0" class="error-message" style="display: none;">Name is needed</p>
+          <p id="errorMessage1" class="error-message" style="display: none;">Email is needed</p>
+          <p id="errorMessage2" class="error-message" style="display: none;">Password is needed</p>
+          <p id="errorMessage3" class="error-message" style="display: none;">Password should match</p>
+          <!--<script>
+            function login() {
+              var email = document.getElementById("loginEmail").value;
+              var password = document.getElementById("loginPassword").value;
+              var valid = true;
+          
+              if (email === "") {
+                document.getElementById("errorMessage1").style.display = "block";
+                valid = false;
+              } else {
+                document.getElementById("errorMessage1").style.display = "none";
+              }
+          
+              if (password === "") {
+                document.getElementById("errorMessage2").style.display = "block";
+                valid = false;
+              } else {
+                document.getElementById("errorMessage2").style.display = "none";
+              }
+          
+              if (valid) {
+                alert('Welcome back to File Manager! Redirecting to your file dashboard...');
+                window.location.href = 'https://filemanager.eco/dashboard';
+              }
+            }
+          </script>-->
           <p class="switch-form" onclick="switchForm('register')">New user? Create an account!</p>
         </div>
         <div class="form-container" id="registerForm" style="display: none;">
@@ -59,7 +89,49 @@
           <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
           <button onclick="register()">Create My Account</button>
           <p class="switch-form" onclick="switchForm('login')">Already have an account? Log in!</p>
+          <p id="errorMessage4" class="error-message" style="display: none;">Name is needed</p>
+          <p id="errorMessage5" class="error-message" style="display: none;">Email is needed</p>
+          <p id="errorMessage6" class="error-message" style="display: none;">Password is needed</p>
+          <p id="errorMessage7" class="error-message" style="display: none;">Password should match</p>
+          <!--<script>
+            function register() {
+            var name = document.getElementById("registerName").value;
+            var email = document.getElementById("registerEmail").value;
+            var password = document.getElementById("registerPassword").value;
+            var confirmpass = document.getElementById("confirmPassword").value;
+            var valid = true;
+
+            if (name === "") {
+              document.getElementById("errorMessage4").style.display = "block";
+              valid = false;
+            } else {
+              document.getElementById("errorMessage4").style.display = "none";
+            }         
+
+            if (email === "") {
+              document.getElementById("errorMessage5").style.display = "block";
+              valid = false;
+            } else {
+              document.getElementById("errorMessage5").style.display = "none";
+            }         
+
+            if (password === "") {
+              document.getElementById("errorMessage6").style.display = "block";
+              valid = false;
+            } else {
+              document.getElementById("errorMessage6").style.display = "none";
+            }        
+            
+            if (valid && confirmpass !== password) {
+              document.getElementById("errorMessage7").style.display = "block";
+            } else if(valid && confirmpass == password) {
+              alert('Welcome to File Manager! Your account is being set up...');
+              switchForm('login');
+            }
+            }                        
+          </script>-->
         </div>
       </div>
+
 </body>
 </html>

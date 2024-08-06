@@ -9,40 +9,62 @@ function switchForm(formType) {
   }
 
   function login() {
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+    var email = document.getElementById("loginEmail").value;
+    var password = document.getElementById("loginPassword").value;
+    var valid = true;
 
     if (email === "") {
-        error.email = 'email is empty'
-    } else if (!email_pattern.test(email)) {
-        error.email = 'email didn\'t match'
-    }else if (password === "") {
-        error.password = 'password is empty'
-    } else if (!password_pattern.test(password)) {
-        error.password = 'password didn\'t match'
-    } return error
+      document.getElementById("errorMessage1").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("errorMessage1").style.display = "none";
+    }
 
-    if (email_pattern.test(email) && password_pattern.test(password)) {
-    alert('Welcome back to File Manager! Redirecting to your file dashboard...');
-    window.location.href = 'https://filemanager.eco/dashboard';
+    if (password === "") {
+      document.getElementById("errorMessage2").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("errorMessage2").style.display = "none";
+    }
+
+    if (valid) {
+      //alert('Welcome back to File Manager! Redirecting to your file dashboard...');
+      window.location.href = 'https://filemanager.eco/dashboard';
     }
   }
 
   function register() {
-    const name = document.getElementById('registerName').value;
-    const email = document.getElementById('registerEmail').value;
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    var name = document.getElementById("registerName").value;
+    var email = document.getElementById("registerEmail").value;
+    var password = document.getElementById("registerPassword").value;
+    var confirmpass = document.getElementById("confirmPassword").value;
+    var valid = true;
 
-    if (password !== confirmPassword) {
-      alert('Oops! Passwords don\'t match. Please try again.');
-      return;
+    if (name === "") {
+      document.getElementById("errorMessage4").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("errorMessage4").style.display = "none";
+    }         
+
+    if (email === "") {
+      document.getElementById("errorMessage5").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("errorMessage5").style.display = "none";
+    }         
+
+    if (password === "") {
+      document.getElementById("errorMessage6").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("errorMessage6").style.display = "none";
+    }        
+    
+    if (valid && confirmpass !== password) {
+      document.getElementById("errorMessage7").style.display = "block";
+    } else if(valid && confirmpass == password) {
+      //alert('Welcome to File Manager! Your account is being set up...');
+      switchForm('login');
     }
-
-    console.log('Registration attempt:', name, email, password);
-
-    alert('Welcome to File Manager! Your account is being set up...');
-    switchForm('login');
-  }
+    }
