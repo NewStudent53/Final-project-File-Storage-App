@@ -66,32 +66,64 @@ include("connect.php");
       <input type="file" name="archivo_fls">
       <button id="upload-button" name="Upload">Upload</button>
     </div>
-  </div>
   </form>
 
 
   <script>
     // Sample file data
-    const files = [
-      { name: "Project Proposal.docx", type: "document", modified: "2 days ago" },
-      { name: "Q2 Report.xlsx", type: "spreadsheet", modified: "1 week ago" },
-      { name: "Logo Design.png", type: "image", modified: "3 days ago" },
-      { name: "Client Meetings", type: "folder", modified: "Yesterday" },
-      { name: "Product Demo.mp4", type: "video", modified: "5 days ago" },
-      { name: "Meeting Notes.txt", type: "text", modified: "4 hours ago" },
-      { name: "Budget Forecast.xlsx", type: "spreadsheet", modified: "1 day ago" },
-      { name: "Assets", type: "folder", modified: "2 weeks ago" }
-    ];
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('userfiles.php')
+        .then(response => response.json())
+        .then(data => {
+            const filesFromServer = data.map(file => ({
+                name: file.name,
+                type: file.type.split('/')[0],
+                modified: file.modified
+            }));
 
+            // Combina los archivos de muestra con los archivos del servidor
+            const files = [
+                /*{ name: "Project Proposal.docx", type: "document", modified: "2 days ago" },
+                { name: "Q2 Report.xlsx", type: "spreadsheet", modified: "1 week ago" },
+                { name: "Logo Design.png", type: "image", modified: "3 days ago" },
+                { name: "Client Meetings", type: "folder", modified: "Yesterday" },
+                { name: "Product Demo.mp4", type: "video", modified: "5 days ago" },
+                { name: "Meeting Notes.txt", type: "text", modified: "4 hours ago" },
+                { name: "Budget Forecast.xlsx", type: "spreadsheet", modified: "1 day ago" },
+                { name: "Assets", type: "folder", modified: "2 weeks ago" },*/
+                ...filesFromServer
+            ];
+
+            renderFiles(files);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+function renderFiles(files) {
     const fileGrid = document.getElementById('file-grid');
-    const uploadBtn = document.getElementById('upload-btn');
-    const uploadModal = document.getElementById('upload-modal');
-    const closeBtn = document.getElementsByClassName('close')[0];
-    const fileInput = document.getElementById('file-input');
-    const uploadButton = document.getElementById('upload-button');
+    fileGrid.innerHTML = '';
+    files.forEach(file => {
+        const fileCard = document.createElement('div');
+        fileCard.className = 'file-card';
+        fileCard.innerHTML = `
+            <div class="file-icon">${getFileIcon(file.type)}</div>
+            <div class="file-name">${file.name}</div>
+            <div class="file-info">Modified: ${file.modified}</div>
+            <div class="file-actions">
+                <span class="file-action view-action">👁️ View</span>
+                <span class="file-action delete-action">🗑️ Delete</span>
+            </div>
+        `;
+        fileGrid.appendChild(fileCard);
 
-    function getFileIcon(type) {
-      switch(type) {
+        // Add event listeners for view and delete actions
+        fileCard.querySelector('.view-action').addEventListener('click', () => viewFile(file));
+        fileCard.querySelector('.delete-action').addEventListener('click', () => deleteFile(file));
+    });
+}
+
+function getFileIcon(type) {
+    switch(type) {
         case 'document': return '📄';
         case 'spreadsheet': return '📊';
         case 'image': return '🖼️';
@@ -99,75 +131,60 @@ include("connect.php");
         case 'video': return '📽️';
         case 'text': return '📝';
         default: return '📄';
-      }
     }
+}
 
-    function renderFiles() {
-      fileGrid.innerHTML = '';
-      files.forEach(file => {
-        const fileCard = document.createElement('div');
-        fileCard.className = 'file-card';
-        fileCard.innerHTML = `
-          <div class="file-icon">${getFileIcon(file.type)}</div>
-          <div class="file-name">${file.name}</div>
-          <div class="file-info">Modified: ${file.modified}</div>
-          <div class="file-actions">
-            <span class="file-action view-action">👁️ View</span>
-            <span class="file-action delete-action">🗑️ Delete</span>
-          </div>
-        `;
-        fileGrid.appendChild(fileCard);
+function viewFile(file) {
+    alert(`Viewing ${file.name}`);
+    // Here you would implement the actual file viewing logic
+}
 
-        // Add event listeners for view and delete actions
-        fileCard.querySelector('.view-action').addEventListener('click', () => viewFile(file));
-        fileCard.querySelector('.delete-action').addEventListener('click', () => deleteFile(file));
-      });
-    }
-
-    function viewFile(file) {
-      alert(`Viewing ${file.name}`);
-      // Here you would implement the actual file viewing logic
-    }
-
-    function deleteFile(file) {
-      if (confirm(`Are you sure you want to delete ${file.name}?`)) {
+function deleteFile(file) {
+    if (confirm(`Are you sure you want to delete ${file.name}?`)) {
         const index = files.indexOf(file);
         if (index > -1) {
-          files.splice(index, 1);
-          renderFiles();
+            files.splice(index, 1);
+            renderFiles(files);
         }
-      }
     }
+}
 
-    uploadBtn.onclick = function() {
-      uploadModal.style.display = "block";
-    }
+const uploadBtn = document.getElementById('upload-btn');
+const uploadModal = document.getElementById('upload-modal');
+const closeBtn = document.getElementsByClassName('close')[0];
+const fileInput = document.getElementById('file-input');
+const uploadButton = document.getElementById('upload-button');
 
-    closeBtn.onclick = function() {
-      uploadModal.style.display = "none";
-    }
+uploadBtn.onclick = function() {
+    uploadModal.style.display = "block";
+}
 
-    window.onclick = function(event) {
-      if (event.target == uploadModal) {
+closeBtn.onclick = function() {
+    uploadModal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == uploadModal) {
         uploadModal.style.display = "none";
-      }
     }
+}
 
-    uploadButton.onclick = function() {
-      const newFiles = fileInput.files;
-      for (let i = 0; i < newFiles.length; i++) {
+uploadButton.onclick = function() {
+    const newFiles = fileInput.files;
+    for (let i = 0; i < newFiles.length; i++) {
         const file = newFiles[i];
         files.push({
-          name: file.name,
-          type: file.type.split('/')[0],
-          modified: 'Just now'
+            name: file.name,
+            type: file.type.split('/')[0],
+            modified: 'Just now'
         });
-      }
-      
-      renderFiles();
-      uploadModal.style.display = "none";
-      fileInput.value = ''; // Clear the file input
     }
+    
+    renderFiles(files);
+    uploadModal.style.display = "none";
+    fileInput.value = ''; // Clear the file input
+}
+
 
     // Initial render
     renderFiles();
