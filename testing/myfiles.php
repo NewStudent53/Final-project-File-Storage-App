@@ -183,11 +183,11 @@ uploadButton.onclick = function() {
     renderFiles(files);
     uploadModal.style.display = "none";
     fileInput.value = ''; // Clear the file input
-}
 
 
     // Initial render
     renderFiles();
+  }
 
     // Other event listeners (sorting, navigation) remain the same
     document.querySelector('.sort-options select').addEventListener('change', function() {
