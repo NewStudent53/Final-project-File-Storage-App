@@ -1,14 +1,18 @@
 <?php
-$directory = 'userfiles';
-$files = array();
+session_start();
+include 'connect.php';
 
-if(isset($_SESSION['email'])){
-    $email=$_SESSION['email'];
-    $query=mysqli_query($conn, "SELECT users.* FROM `users` WHERE users.email='$email'");
-    while($row=mysqli_fetch_array($query)){
-        $id = $row['Id'];
-    }
-   }
+// Obtener user_id de la solicitud
+if (isset($_GET['user_id'])) {
+    $id_usuario = $_GET['user_id'];
+} else {
+    // Manejar el caso en que no se proporciona user_id
+    die("User ID no proporcionado.");
+}
+
+$directory = "userfiles/user_$id_usuario/";
+
+$files = array();
 
 if (is_dir($directory)) {
     if ($dh = opendir($directory)) {
