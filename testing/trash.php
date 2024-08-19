@@ -6,191 +6,7 @@ include("connect.php");
 
 <html><head>
 <title>File Manager - Trash</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-  :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #2196F3;
-    --accent-color: #FFC107;
-    --background-color: #F1F8E9;
-    --text-color: #333333;
-    --sidebar-bg: #E8F5E9;
-    --hover-color: #81C784;
-    --delete-color: #F44336;
-    --recover-color: #4CAF50;
-  }
-
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    height: 100%;
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-
-  .dashboard {
-    display: flex;
-    height: 100vh;
-  }
-
-  .sidebar {
-    width: 250px;
-    background-color: var(--sidebar-bg);
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .logo {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 20px;
-    display: block;
-  }
-
-  .nav-item {
-    padding: 10px 15px;
-    margin: 5px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .nav-item:hover {
-    background-color: var(--hover-color);
-  }
-
-  .nav-item.active {
-    background-color: var(--primary-color);
-    color: white;
-  }
-
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 20px;
-    padding: 5px 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .search-bar input {
-    border: none;
-    outline: none;
-    padding: 5px;
-    font-size: 16px;
-    width: 300px;
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-  }
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-
-  .trash-list {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  .trash-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-  }
-
-  .trash-item:hover {
-    background-color: #f5f5f5;
-  }
-
-  .file-icon {
-    font-size: 24px;
-    margin-right: 15px;
-  }
-
-  .file-details {
-    flex-grow: 1;
-  }
-
-  .file-name {
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-
-  .file-info {
-    font-size: 12px;
-    color: #666;
-  }
-
-  .action-buttons {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s, transform 0.1s;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-
-  .btn-recover {
-    background-color: var(--recover-color);
-    color: white;
-  }
-
-  .btn-recover:hover {
-    background-color: #45a049;
-  }
-
-  .btn-delete {
-    background-color: var(--delete-color);
-    color: white;
-  }
-
-  .btn-delete:hover {
-    background-color: #d32f2f;
-  }
-
-  .empty-trash {
-    text-align: center;
-    padding: 50px;
-    color: #999;
-  }
-
-  .empty-trash-icon {
-    font-size: 64px;
-    margin-bottom: 20px;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="styles/trash.css">
 </head>
 <body>
   <div class="dashboard">
@@ -241,6 +57,40 @@ include("connect.php");
           </span>
         </div>
       </div>
+
+<script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const userId = <?php echo $id; ?>; // Tu variable user_id
+    fetch(`testing/deletefiles.php?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Verifica los datos en la consola
+            const filesFromServer = data.map(file => ({
+                name: file.file_name,
+                type: file.file_type, // Asegúrate de incluir el tipo de archivo
+                path: file.file_path,
+                uploadDate: file.upload_date
+            }));
+            console.log('antes', filesFromServer);
+            // Iterar sobre el arreglo y imprimir solo el name
+            filesFromServer.forEach(file => {
+                console.log(file.name);
+            });
+
+            console.log('despues', data);
+
+            const files = [
+                ...filesFromServer
+            ];
+
+            renderFiles(files);
+        })
+        .catch(error => console.error('Error:', error));
+});
+</script>
+
+
+
       <h2>Trash</h2>
       <p>Files in the trash will be automatically deleted after 30 days.</p>
       <ul class="trash-list">
@@ -289,17 +139,22 @@ include("connect.php");
           </div>
         </li>
       </ul>
-      <!-- Uncomment this section to show empty trash state
       <div class="empty-trash">
         <div class="empty-trash-icon">🗑️</div>
         <h3>Trash is Empty</h3>
         <p>There are no items in the trash.</p>
       </div>
-      -->
     </div>
   </div>
 
   <script>
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', function() {
+        if (!this.classList.contains('active')) {
+        //  alert(`Navigating to ${this.textContent}`);
+        }
+      });
+    });
 
     document.querySelectorAll('.btn-recover').forEach(btn => {
       btn.addEventListener('click', function(e) {
@@ -330,13 +185,6 @@ include("connect.php");
         } else {
           item.style.display = 'none';
         }
-      });
-    });
-
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelector('.nav-item.active').classList.remove('active');
-        this.classList.add('active');
       });
     });
 

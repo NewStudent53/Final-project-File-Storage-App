@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
+error_reporting(E_ALL);
 include 'connect.php';
 
 // Obtener user_id de la solicitud
@@ -9,7 +12,6 @@ if (isset($_GET['user_id'])) {
     // Manejar el caso en que no se proporciona user_id
     die("User ID no proporcionado.");
 }
-
 $directory = "userfiles/user_$id_usuario/";
 
 $files = array();

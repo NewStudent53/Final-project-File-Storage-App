@@ -5,7 +5,7 @@ include("connect.php");
 
 <html><head>
 <title>File Manager - My Files</title>
-<link rel="stylesheet" href="stylefiles.css">
+<link rel="stylesheet" href="styles/stylefiles.css">
 </head>
 <body>
   <div class="dashboard">
@@ -49,10 +49,8 @@ include("connect.php");
         $query=mysqli_query($conn, "SELECT users.* FROM `users` WHERE users.email='$email'");
         while($row=mysqli_fetch_array($query)){
             echo $row['username'];
-            echo $row['Id'];
             $id = $row['Id'];
             $user_id = $row['Id'];
-            echo $user_id;
         }
        }
        ?>
@@ -91,14 +89,23 @@ include("connect.php");
   <script>
 document.addEventListener('DOMContentLoaded', () => {
     const userId = <?php echo $id; ?>; // Tu variable user_id
-    fetch(`userfiles.php?user_id=${userId}`)
+    fetch(`testing/testconsttabla.php?user_id=${userId}`)
         .then(response => response.json())
         .then(data => {
+            console.log(data); // Verifica los datos en la consola
             const filesFromServer = data.map(file => ({
-                name: file.name,
-                type: file.type.split('/')[0],
-                modified: file.modified
+                name: file.file_name,
+                type: file.file_type, // Asegúrate de incluir el tipo de archivo
+                path: file.file_path,
+                uploadDate: file.upload_date
             }));
+            console.log('antes', filesFromServer);
+            // Iterar sobre el arreglo y imprimir solo el name
+            filesFromServer.forEach(file => {
+                console.log(file.name);
+            });
+
+            console.log('despues', data);
 
             const files = [
                 ...filesFromServer
@@ -117,11 +124,13 @@ function renderFiles(files) {
         fileCard.className = 'file-card';
         fileCard.innerHTML = `
             <div class="file-icon">${getFileIcon(file.type)}</div>
+            <span>${(file.type)}</span>
             <div class="file-name">${file.name}</div>
-            <div class="file-info">Modified: ${file.modified}</div>
+            <div class="file-info">Modified: ${file.uploadDate}</div>
             <div class="file-actions">
                 <span class="file-action view-action">👁️ View</span>
                 <span class="file-action delete-action">🗑️ Delete</span>
+                <span> pase por aqui </span>
             </div>
         `;
         fileGrid.appendChild(fileCard);
@@ -133,14 +142,18 @@ function renderFiles(files) {
 }
 
 function getFileIcon(type) {
-    switch(type) {
-        case 'document': return '📄';
-        case 'spreadsheet': return '📊';
-        case 'image': return '🖼️';
-        case 'folder': return '📁';
-        case 'video': return '📽️';
-        case 'text': return '📝';
-        default: return '📄';
+ console.log('!check this out',type);
+ switch(type) {
+        case 'pdf': return '📝'; // PDF
+        case 'msword': return '📄'; // Word
+        case 'vnd.ms-excel': return '📊'; // Excel
+        case 'vnd.openxmlformats-officedocument.spreadsheetml.sheet': return '📊'; // Excel (xlsx)
+        case 'jpeg': return '🖼️'; // JPEG
+        case 'jpg': return '🖼️'; // JPG
+        case 'png': return '🖼️'; // PNG
+        case 'mp4': return '📽️'; // MP4
+        case 'plain': return '📝'; // Text
+        default: return '📄'; // Default icon
     }
 }
 
@@ -230,7 +243,10 @@ uploadButton.onclick = function() {
       const trashElement = document.getElementById('trash');
       if (trashElement) {
         trashElement.addEventListener('click', function() {
-          window.location.href = 'trash.php';
+/*          window.location.href = 'trash.php';  */
+          window.location.href = 'Mytrashfiles.php';
+
+
         });
       }
     });

@@ -1,127 +1,11 @@
 <?php
 session_start();
 include("connect.php");
-
 ?>
-<html><head>
-<title>File Manager - Dashboard</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-  :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #2196F3;
-    --accent-color: #FFC107;
-    --background-color: #F1F8E9;
-    --text-color: #333333;
-    --sidebar-width: 250px;
-  }
-
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    height: 100%;
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-
-  .dashboard {
-    display: flex;
-    height: 100vh;
-  }
-
-  .sidebar {
-    width: var(--sidebar-width);
-    background-color: #ffffff;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-    padding: 20px;
-  }
-
-  .logo {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
-  }
-
-  .nav-item {
-    padding: 10px 15px;
-    margin: 5px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .nav-item:hover {
-    background-color: var(--background-color);
-  }
-
-  .nav-item.active {
-    background-color: var(--primary-color);
-    color: #ffffff;
-  }
-
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .user-profile {
-    display: flex;
-    align-items: center;
-  }
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-
-  .file-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-
-  .file-item {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .file-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
-
-  .file-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
-  }
-
-  .file-name {
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-
-  .file-info {
-    font-size: 12px;
-    color: #666;
-  }
-
-</style>
+<html>
+<head>
+  <title>File Manager - Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
 </head>
 <body>
   <div class="dashboard">
@@ -170,7 +54,6 @@ include("connect.php");
         $query=mysqli_query($conn, "SELECT users.* FROM `users` WHERE users.email='$email'");
         while($row=mysqli_fetch_array($query)){
             echo $row['username'];
-            echo $row['Id'];
         }
        }
        ?>
