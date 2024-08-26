@@ -53,7 +53,7 @@ if (isset($_FILES["archivo_fls"])) {
 
     // Verificar si la extensión es .exe
     if ($file_type == 'exe') {
-        echo "No se permite subir archivos .exe.";
+        echo "You cannot upload .exe files.";
         exit();
     }
 

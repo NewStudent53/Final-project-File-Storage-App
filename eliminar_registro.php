@@ -1,5 +1,4 @@
 <?php
-echo   "entre elimianr)regsri";
 /*session_start();
 include 'connect.php';
 
@@ -39,7 +38,7 @@ include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cliente_id = $_POST['user_id'];
-    echo "No lo imprimio $cliente_id";
+    echo "didn't print $cliente_id";
 
     $id_usuario = $cliente_id;
 }
@@ -55,15 +54,15 @@ if (isset($_FILES["archivo_fls"])) {
     echo "$id_usuario";
 
     if (!file_exists($ruta_base)) {
-        echo "archivo no existe en servidor";        
+        echo "File wasn't found on server";        
     }
     else {
         $directorio_actual = getcwd();  
-    echo "archivo exite";
+    echo "file exists";
     if (unlink($ruta_base)) {
-        echo "El archivo ha sido eliminado correctamente.";
+        echo "File has been eliminated.";
     } else {
-        echo "Error al intentar eliminar el archivo.";
+        echo "Couldn't delete file.";
     }
 }
 }

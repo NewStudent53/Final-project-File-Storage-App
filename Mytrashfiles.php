@@ -5,7 +5,7 @@ include("connect.php");
 
 <html><head>
 <title>File Manager - My Trash Files</title>
-<link rel="stylesheet" href="styles/stylefiles.css">
+<link rel="stylesheet" href="styles/stylishB.css">
 </head>
 <body>
   <div class="dashboard">

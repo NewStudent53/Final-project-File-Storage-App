@@ -8,7 +8,7 @@ $conn = new mysqli($host, $user, $pass, $db);
 
 // Verificar conexión
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
 // Obtener el ID del archivo a eliminar
@@ -28,16 +28,16 @@ if (isset($_POST['file_id'])) {
         // Ruta completa del archivo
         $file_full_path = $file_path . $file_name;
 
-        echo "adios al archivo fisico: $file_full_path";
+        echo "Byebye file: $file_full_path";
         // Eliminar el archivo físico del servidor
         if (file_exists($file_full_path)) {
             if (unlink($file_full_path)) {
-                echo "El archivo ha sido eliminado correctamente.";
+                echo "File has been eliminated.";
             } else {
-                echo "Error al intentar eliminar el archivo.";
+                echo "File couldn't be eliminated.";
             }
         } else {
-            echo "El archivo no existe en el servidor.";
+            echo "Couldn't find file on server.";
         }
 
         // Consulta SQL para eliminar el registro de la base de datos
@@ -48,7 +48,7 @@ if (isset($_POST['file_id'])) {
         if ($stmt->execute()) {
             echo "<script>alert('File has been permanently deleted successfully');window.location.href='Mytrashfiles.php';</script>";
         } else {
-            echo "Error al eliminar el registro de la base de datos: " . $stmt->error;
+            echo "Couldn't delete the register on the db: " . $stmt->error;
             echo "<script>alert('Couldn't eliminate file');</script>";
             echo "<script>window.location.href='Mytrashfiles.php';</script>";
 
@@ -56,10 +56,10 @@ if (isset($_POST['file_id'])) {
 
         $stmt->close();
     } else {
-        echo "No se encontró el archivo en la base de datos.";
+        echo "Couldn't find file on db.";
     }
 } else {
-    echo "ID de archivo no proporcionado.";
+    echo "file_ID not found.";
 }
 $conn->close();
 ?>

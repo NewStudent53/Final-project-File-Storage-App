@@ -5,7 +5,7 @@ include("connect.php");
 
 <html><head>
 <title>File Manager - My Files</title>
-<link rel="stylesheet" href="styles/stylefiles.css">
+<link rel="stylesheet" href="styles/stylishA.css">
 </head>
 <body>
   <div class="dashboard">
@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: file.file_type, // Asegúrate de incluir el tipo de archivo
                 path: file.file_path,
                 uploadDate: file.upload_date,
+                id: file.id,
                 userId: userId // Añadir userId aquí
             }));
             console.log('antes', filesFromServer);
@@ -275,7 +276,6 @@ uploadButton.onclick = function() {
       const trashElement = document.getElementById('trash');
       if (trashElement) {
         trashElement.addEventListener('click', function() {
-/*          window.location.href = 'trash.php';  */
           window.location.href = 'Mytrashfiles.php';
 
 

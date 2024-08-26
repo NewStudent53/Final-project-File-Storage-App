@@ -5,7 +5,7 @@ include("connect.php");
 <html>
 <head>
   <title>File Manager - Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="styles/home.css">
 </head>
 <body>
   <div class="dashboard">
